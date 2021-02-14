@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>REGISTER</title>
+</head>
+<body>
+    <form method="POST" action="">
+        <p>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+        </p>
+        <p>
+            <label for="repeatedPassword">Repeat Password</label>
+            <input type="password" id="repeatedPassword" name="repeatedPassword" class="form-control" placeholder="Repeat Password" required="">
+        </p>
+        <p>
+            <label for="firstName">Name</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" required="" autofocus="">
+        </p>
+        <p>
+            <label for="lastName">Surname</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Surname" required="" autofocus="">
+        </p>
+        <p>
+            <label for="email">E-mail</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="E-mail" required="" autofocus="">
+        </p>
+        <p>
+            <label for="role">Role</label>
+            <input type="radio" id="role" name="role" th:each="r : ${roles}" th:value="${r.name()}" th:text="${r.name()}">
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+</body>
+</html>
