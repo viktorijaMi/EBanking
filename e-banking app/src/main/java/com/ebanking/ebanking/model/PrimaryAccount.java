@@ -27,7 +27,7 @@ public class PrimaryAccount {
 
     private Double accountBalance;
 
-    @OneToMany(mappedBy = "primaryAccount")
+    @OneToMany(mappedBy = "fromAccount")
     private List<PrimaryTransaction> primaryTransactionList;
 
     public PrimaryAccount(String username, int number, Double accountBalance){

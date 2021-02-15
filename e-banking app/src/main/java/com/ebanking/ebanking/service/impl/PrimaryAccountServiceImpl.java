@@ -1,6 +1,7 @@
 package com.ebanking.ebanking.service.impl;
 
 import com.ebanking.ebanking.model.PrimaryAccount;
+import com.ebanking.ebanking.model.PrimaryTransaction;
 import com.ebanking.ebanking.model.User;
 import com.ebanking.ebanking.model.exceptions.NotSupportedTransferException;
 import com.ebanking.ebanking.model.exceptions.PrimaryAccountNotFoundException;
@@ -8,7 +9,7 @@ import com.ebanking.ebanking.model.exceptions.UserNotFoundException;
 import com.ebanking.ebanking.repository.PrimaryAccountRepository;
 import com.ebanking.ebanking.repository.UserRepository;
 import com.ebanking.ebanking.service.PrimaryAccountService;
-import com.ebanking.ebanking.service.UserService;
+import com.ebanking.ebanking.service.PrimaryTransactionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +20,12 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
 
     private final PrimaryAccountRepository primaryAccountRepository;
     private final UserRepository userRepository;
-    private UserService userService;
+    private final PrimaryTransactionService primaryTransactionService;
 
-    public PrimaryAccountServiceImpl(PrimaryAccountRepository primaryAccountRepository, UserRepository userRepository) {
+    public PrimaryAccountServiceImpl(PrimaryAccountRepository primaryAccountRepository, UserRepository userRepository, PrimaryTransactionService primaryTransactionService) {
         this.primaryAccountRepository = primaryAccountRepository;
         this.userRepository = userRepository;
+        this.primaryTransactionService = primaryTransactionService;
     }
 
 
@@ -58,7 +60,7 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
     }
 
     @Override
-    public PrimaryAccount transferMoney(Long fromAccountId, Long toAccountId, Double transferAmount) {
+    public PrimaryAccount transferMoney(Long fromAccountId, Long toAccountId,String description, Double transferAmount) {
         PrimaryAccount fromAccount = this.primaryAccountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new PrimaryAccountNotFoundException(fromAccountId));
         PrimaryAccount toAccount = this.primaryAccountRepository.findById(toAccountId)
@@ -69,9 +71,11 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
 
         fromAccount.setAccountBalance(fromAccount.getAccountBalance() - transferAmount);
         toAccount.setAccountBalance(toAccount.getAccountBalance() + transferAmount);
+        primaryTransactionService.createTransaction(description, transferAmount, fromAccountId, toAccountId);
 
         this.primaryAccountRepository.save(fromAccount);
         this.primaryAccountRepository.save(toAccount);
         return fromAccount;
     }
+
 }

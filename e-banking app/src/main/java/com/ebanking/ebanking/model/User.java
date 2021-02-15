@@ -32,8 +32,6 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private PrimaryAccount primaryAccount;
 
-    @OneToMany(mappedBy = "user")
-    private List<Recipient> recipientList;
 
     public User(String username, String password, String firstName, String lastName, String email, Role role, PrimaryAccount primaryAccount) {
         this.username = username;
@@ -43,6 +41,5 @@ public class User {
         this.email = email;
         this.role = role;
         this.primaryAccount = primaryAccount;
-        this.recipientList = new ArrayList<>();
     }
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TRANSACTIONS</title>
+</head>
+<body>
+    <h3>Transactions for <th:block th:text="${primaryAccountNumber}"></th:block></h3>
+    <div th:if="${transactionsList.size() == 0}">
+        <h2>No transactions found for this account</h2>
+    </div>
+    <div th:if="${transactionsList.size() > 0}"
+         th:each="t : ${transactionsList}">
+        <div>Date: <th:block th:text="${t.getDate().toString()}"></th:block></div>
+        <div>From account: <th:block th:text="${t.getFromAccount().getNumber()}"></th:block></div>
+        <div>To account: <th:block th:text="${t.getToAccount().getNumber()}"></th:block></div>
+        <div>Transfer Amount: <th:block th:text="${t.getAmount()}"></th:block></div>
+        <div>Description: <th:block th:text="${t.getDescription()}"></th:block></div>
+    </div>
+    <a href="/home">Go back to account information</a>
+</body>
+</html>

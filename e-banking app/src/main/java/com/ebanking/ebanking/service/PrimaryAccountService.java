@@ -1,6 +1,7 @@
 package com.ebanking.ebanking.service;
 
 import com.ebanking.ebanking.model.PrimaryAccount;
+import com.ebanking.ebanking.model.PrimaryTransaction;
 import com.ebanking.ebanking.model.User;
 import javafx.beans.binding.DoubleExpression;
 
@@ -13,5 +14,5 @@ public interface PrimaryAccountService {
     Optional<PrimaryAccount> getAccount(Long id);
     User addMoneyToAccount(Long id, Double ballance);
     List<PrimaryAccount> findAll();
-    PrimaryAccount transferMoney(Long fromAccountId, Long toAccountId, Double transferAmount);
+    PrimaryAccount transferMoney(Long fromAccountId, Long toAccountId,String description, Double transferAmount);
 }

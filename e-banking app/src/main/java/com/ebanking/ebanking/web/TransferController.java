@@ -45,11 +45,12 @@ public class TransferController {
 
     @PostMapping
     public String transferMoney(@RequestParam Long toAccountId,
+                                @RequestParam String description,
                                 @RequestParam Double transferAmount,
                                 HttpServletRequest request){
         PrimaryAccount fromAccount = (PrimaryAccount) request.getSession().getAttribute("account");
         try {
-            this.primaryAccountService.transferMoney(fromAccount.getId(), toAccountId, transferAmount);
+            this.primaryAccountService.transferMoney(fromAccount.getId(), toAccountId,description, transferAmount);
         } catch (NotSupportedTransferException ex){
             return "redirect:/transfer/"+fromAccount.getId() +"?error=" + ex.getMessage();
         }

@@ -22,6 +22,9 @@
     <div>
         <a th:href="@{'/transfer/{id}' (id=${user.getPrimaryAccount().getId()})}">Transfer money</a>
     </div>
+    <div>
+        <a th:href="@{'/transactions/{id}' (id=${user.getPrimaryAccount().getId()})}">Transactions</a>
+    </div>
     <h3>Add money to your account</h3>
     <div>
         <a th:href="@{'/home/add/{id}' (id=${user.getPrimaryAccount().getId()})}" type="button">ADD MONEY TO ACCOUNT</a>
