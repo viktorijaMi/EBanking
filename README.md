@@ -5,3 +5,4 @@ What is implemented so far:
 - The user can Add money to his account.
 - The user can transfer money to accounts(users) of this bank system.
 - The system doesn't allow a user to transfer more money than he has on his account.
+- The user can see the transactions he has done.
