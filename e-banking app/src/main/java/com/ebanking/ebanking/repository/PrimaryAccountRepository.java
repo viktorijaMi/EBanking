@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PrimaryAccountRepository extends JpaRepository<PrimaryAccount, Long> {
     PrimaryAccount findByNumber(int number);
+    PrimaryAccount findByUsername(String username);
 }

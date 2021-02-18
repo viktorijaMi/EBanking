@@ -1,4 +1,4 @@
-<th:block xmlns:th="http://www.thymeleaf.org">
+<th:block xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <h3>Welcome to online banking <th:block th:text="${user.getUsername()}"></th:block></h3>
     <h2>
     <th:block th:if="${hasMessage}">
@@ -10,17 +10,20 @@
         <div>First Name: <th:block th:text="${user.getFirstName()}"></th:block></div>
         <div>Last Name: <th:block th:text="${user.getLastName()}"></th:block></div>
         <div>Primary Account Number: <th:block th:text="${user.getPrimaryAccount().getNumber()}"></th:block></div>
-        <div>Primary Account Balance: <th:block th:text="${user.getPrimaryAccount().getAccountBalance()}"></th:block></div>
+        <div sec:authorize="hasRole('ROLE_USER')">Primary Account Balance: <th:block th:text="${user.getPrimaryAccount().getAccountBalance()}"></th:block></div>
     </div>
     <div>
-        <a th:href="@{'/transfer/{id}' (id=${user.getPrimaryAccount().getId()})}">Transfer money</a>
+        <a th:href="@{'/transfer/{id}' (id=${user.getPrimaryAccount().getId()})}" sec:authorize="hasRole('ROLE_USER')">Transfer money</a>
     </div>
     <div>
-        <a th:href="@{'/transactions/{id}' (id=${user.getPrimaryAccount().getId()})}">Transactions</a>
+        <a th:href="@{'/transactions/{id}' (id=${user.getPrimaryAccount().getId()})}" sec:authorize="hasRole('ROLE_USER')">Transactions</a>
     </div>
-    <h3>Add money to your account</h3>
-    <div>
-        <a th:href="@{'/home/add/{id}' (id=${user.getPrimaryAccount().getId()})}" type="button">ADD MONEY TO ACCOUNT</a>
-    </div>
-    <a href="/logout">LOGOUT</a>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <h3>Add money to account</h3>
+        <div>
+            <a href="/home/add" type="button">ADD MONEY TO ACCOUNT</a>
+        </div>
+    </th:block>
+
+    <a href="/logout" sec:authorize="isAuthenticated()">LOGOUT</a>
 </th:block>

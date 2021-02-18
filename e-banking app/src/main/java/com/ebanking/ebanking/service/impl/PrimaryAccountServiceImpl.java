@@ -32,6 +32,9 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
     @Override
     public PrimaryAccount createAccount(String username, int number, Double ballance) {
         PrimaryAccount primaryAccount = new PrimaryAccount(username, number, ballance);
+        if (this.primaryAccountRepository.findAll().contains(primaryAccount)){
+            return primaryAccount;
+        }
         return this.primaryAccountRepository.save(primaryAccount);
     }
 
@@ -56,7 +59,10 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
 
     @Override
     public List<PrimaryAccount> findAll() {
-        return this.primaryAccountRepository.findAll();
+
+        List<PrimaryAccount> primaryAccountList = this.primaryAccountRepository.findAll();
+        primaryAccountList.remove(this.primaryAccountRepository.findByUsername("admin"));
+        return primaryAccountList;
     }
 
     @Override

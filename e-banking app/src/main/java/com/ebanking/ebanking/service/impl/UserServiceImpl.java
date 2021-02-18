@@ -4,11 +4,13 @@ import com.ebanking.ebanking.model.PrimaryAccount;
 import com.ebanking.ebanking.model.User;
 import com.ebanking.ebanking.model.enumerations.Role;
 import com.ebanking.ebanking.model.exceptions.PasswordsDoNotMatchException;
-import com.ebanking.ebanking.model.exceptions.PrimaryAccountNotFoundException;
 import com.ebanking.ebanking.model.exceptions.UserNotFoundException;
 import com.ebanking.ebanking.repository.UserRepository;
 import com.ebanking.ebanking.service.PrimaryAccountService;
 import com.ebanking.ebanking.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,10 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PrimaryAccountService primaryAccountService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PrimaryAccountService primaryAccountService) {
+    public UserServiceImpl(UserRepository userRepository, PrimaryAccountService primaryAccountService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.primaryAccountService = primaryAccountService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> login(String username, String password) {
-        User user = this.userRepository.findByUsername(username)
+        User user = this.userRepository.findByUsernameAndPassword(username, passwordEncoder.encode(password))
                 .orElseThrow(() -> new UserNotFoundException(username));
         return Optional.of(user);
     }
@@ -47,8 +51,14 @@ public class UserServiceImpl implements UserService {
         }
         Random random = new Random();
         PrimaryAccount primaryAccount = this.primaryAccountService.createAccount(username, random.nextInt(Integer.MAX_VALUE), 0.0);
-        User user = new User(username, password, firstName, lastName, email, role, primaryAccount);
+        User user = new User(username, passwordEncoder.encode(password), firstName, lastName, email, role, primaryAccount);
         this.userRepository.save(user);
         return Optional.of(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return this.userRepository.findByUsername(s)
+                .orElseThrow(() -> new UserNotFoundException(s));
     }
 }

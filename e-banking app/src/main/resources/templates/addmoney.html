@@ -5,10 +5,17 @@
     <title>ADD</title>
 </head>
 <body>
-    <form th:method="post" th:action="@{'/home/add/{id}' (id=${primaryAccount?.getId()})}">
-        <div>
-            <div th:text="${primaryAccount.getNumber()}">Account Number</div>
-        </div>
+    <form method="post" action="/home/add">
+        <label>
+            Choose account to add money:
+            <select name="id">
+                <option
+                        th:each="pt : ${primaryAccountList}"
+                        th:text="${pt.getNumber()}"
+                        th:value="${pt.getId()}">
+                </option>
+            </select>
+        </label>
         <div>
             <label for="ballance">Add Balance</label>
             <input type="number" id="ballance" name="ballance">

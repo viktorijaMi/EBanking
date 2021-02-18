@@ -24,17 +24,19 @@ public class LoginController {
     }
 
     @GetMapping
-    public String getLoginPage(Model model){
+    public String getLoginPage(@RequestParam(required = false) String error, Model model){
+        if(error != null && !error.isEmpty()){
+            model.addAttribute("hasError", true);
+            model.addAttribute("error", error);
+        }
         model.addAttribute("bodyContent", "login");
         return "master-template";
     }
 
     @PostMapping
     public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        HttpServletRequest request){
+                        @RequestParam String password){
         User user = this.userService.login(username, password).get();
-        request.getSession().setAttribute("user", user);
         return "redirect:/home";
     }
 }

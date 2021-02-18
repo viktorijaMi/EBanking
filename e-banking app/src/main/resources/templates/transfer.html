@@ -8,7 +8,11 @@
     <th:block th:if="${hasError}">
         <div th:text="${error}"></div>
     </th:block>
-    <form method="post" action="/transfer">
+    <div th:if="${primaryAccountList.size() == 0}">
+        <div>Sorry you cannot make any transfers because you are the only account on this e-banking system</div>
+    </div>
+    <div th:if="${primaryAccountList.size() > 0}">
+        <form method="post" action="/transfer">
         <div>From Account: <th:block th:text="${primaryAccount.getNumber()}"></th:block></div>
         <div>
         <label>To Account: </label>
@@ -29,6 +33,8 @@
             <input type="number" id="transferAmount" name="transferAmount">
         </div>
         <button type="submit">TRANSFER</button>
-    </form>
+        </form>
+    </div>
+
 </body>
 </html>

@@ -3,20 +3,24 @@ package com.ebanking.ebanking.web;
 import com.ebanking.ebanking.model.PrimaryAccount;
 import com.ebanking.ebanking.model.User;
 import com.ebanking.ebanking.service.PrimaryAccountService;
+import com.ebanking.ebanking.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping({"/home", ""})
 public class HomeController {
 
     private final PrimaryAccountService primaryAccountService;
+    private final UserService userService;
 
-    public HomeController(PrimaryAccountService primaryAccountService) {
+    public HomeController(PrimaryAccountService primaryAccountService, UserService userService) {
         this.primaryAccountService = primaryAccountService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -27,21 +31,23 @@ public class HomeController {
             model.addAttribute("hasMessage", true);
             model.addAttribute("message", "TRANSFER SUCCESSFUL");
         }
-        User user = (User) request.getSession().getAttribute("user");
+        User user = userService.findByUsername(request.getRemoteUser()).get();
         model.addAttribute("user", user);
         model.addAttribute("bodyContent", "home");
         return "master-template";
     }
 
-    @GetMapping("/add/{id}")
-    public String getAddMoneyPage(@PathVariable Long id, Model model){
-        PrimaryAccount primaryAccount = this.primaryAccountService.getAccount(id).get();
-        model.addAttribute("primaryAccount", primaryAccount);
+    @GetMapping("/add")
+    public String getAddMoneyPage(Model model,
+                                  HttpServletRequest request){
+        List<PrimaryAccount> primaryAccountList = this.primaryAccountService.findAll();
+        primaryAccountList.remove(userService.findByUsername(request.getRemoteUser()).get().getPrimaryAccount());
+        model.addAttribute("primaryAccountList", primaryAccountList);
         return "addmoney";
     }
 
-    @PostMapping("/add/{id}")
-    public String addMoneyToAccount(@PathVariable Long id,
+    @PostMapping("/add")
+    public String addMoneyToAccount(@RequestParam Long id,
                                     @RequestParam Double ballance,
                                     HttpServletRequest request){
         User user = this.primaryAccountService.addMoneyToAccount(id, ballance);
