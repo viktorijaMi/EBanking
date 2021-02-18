@@ -28,7 +28,8 @@ public class RegisterController {
     public String getRegisterPage(Model model){
         List<Role> roles = Arrays.asList(Role.values());
         model.addAttribute("roles", roles);
-        return "register";
+        model.addAttribute("bodyContent", "register");
+        return "master-template";
     }
 
     @PostMapping

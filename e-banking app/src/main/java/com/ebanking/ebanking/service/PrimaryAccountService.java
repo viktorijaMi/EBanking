@@ -1,11 +1,8 @@
 package com.ebanking.ebanking.service;
 
 import com.ebanking.ebanking.model.PrimaryAccount;
-import com.ebanking.ebanking.model.PrimaryTransaction;
 import com.ebanking.ebanking.model.User;
-import javafx.beans.binding.DoubleExpression;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 

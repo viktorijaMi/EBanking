@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>HOME</title>
-</head>
-<body>
-
+<th:block xmlns:th="http://www.thymeleaf.org">
     <h3>Welcome to online banking <th:block th:text="${user.getUsername()}"></th:block></h3>
     <h2>
     <th:block th:if="${hasMessage}">
@@ -30,5 +23,4 @@
         <a th:href="@{'/home/add/{id}' (id=${user.getPrimaryAccount().getId()})}" type="button">ADD MONEY TO ACCOUNT</a>
     </div>
     <a href="/logout">LOGOUT</a>
-</body>
-</html>
+</th:block>

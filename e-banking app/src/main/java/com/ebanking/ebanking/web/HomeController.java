@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping({"/home", ""})
 public class HomeController {
 
     private final PrimaryAccountService primaryAccountService;
@@ -29,7 +29,8 @@ public class HomeController {
         }
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
-        return "home";
+        model.addAttribute("bodyContent", "home");
+        return "master-template";
     }
 
     @GetMapping("/add/{id}")
