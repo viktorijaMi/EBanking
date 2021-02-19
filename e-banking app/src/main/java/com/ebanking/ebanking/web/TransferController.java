@@ -40,7 +40,8 @@ public class TransferController {
         request.getSession().setAttribute("account", primaryAccount);
         model.addAttribute("primaryAccount", primaryAccount);
         model.addAttribute("primaryAccountList", primaryAccountList);
-        return "transfer";
+        model.addAttribute("bodyContent", "transfer");
+        return "master-template";
     }
 
     @PostMapping

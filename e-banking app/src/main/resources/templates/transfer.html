@@ -1,40 +1,36 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>TRANSFER</title>
-</head>
-<body>
+<div class="container w-75 mt-4" xmlns:th="http://www.thymeleaf.org">
     <th:block th:if="${hasError}">
         <div th:text="${error}"></div>
     </th:block>
     <div th:if="${primaryAccountList.size() == 0}">
-        <div>Sorry you cannot make any transfers because you are the only account on this e-banking system</div>
+        <span class="text-info">Sorry you cannot make any transfers because you are the only account on this e-banking system</span>
     </div>
     <div th:if="${primaryAccountList.size() > 0}">
         <form method="post" action="/transfer">
-        <div>From Account: <th:block th:text="${primaryAccount.getNumber()}"></th:block></div>
-        <div>
-        <label>To Account: </label>
-        <select name="toAccountId">
-            <option
-                    th:each="pt : ${primaryAccountList}"
-                    th:text="${pt.getNumber()}"
-                    th:value="${pt.getId()}">
-            </option>
-        </select>
-        </div>
-        <div>
-            <label for="description">Description for transfer</label>
-            <input type="text" id="description" name="description" placeholder="Why do you transfer money to this account?">
-        </div>
-        <div>
-            <label for="transferAmount">Transfer amount</label>
-            <input type="number" id="transferAmount" name="transferAmount">
-        </div>
-        <button type="submit">TRANSFER</button>
+            <div class="form-group">
+                <h4>From Account: <span class="text-info" th:text="${primaryAccount.getNumber()}"></span></h4>
+            </div>
+            <div class="form-group">
+                <label>To Account:
+                    <select class="form-control" name="toAccountId">
+                        <option
+                            th:each="pt : ${primaryAccountList}"
+                            th:text="${pt.getNumber()}"
+                            th:value="${pt.getId()}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="description">Description for transfer</label>
+                <input class="form-control" type="text" id="description" name="description" placeholder="Why do you transfer money to this account?">
+            </div>
+            <div class="form-group">
+                <label for="transferAmount">Transfer amount</label>
+                <input class="form-control" type="number" id="transferAmount" name="transferAmount">
+            </div>
+            <a href="/" class="btn btn-info" type="submit">Back</a>
+            <button class="btn btn-info" type="submit">Transfer</button>
         </form>
     </div>
-
-</body>
-</html>
+</div>

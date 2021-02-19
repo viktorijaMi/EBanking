@@ -28,6 +28,7 @@ public class TransactionController {
         List<PrimaryTransaction> transactionsList = this.primaryTransactionService.getTransactions(id);
         model.addAttribute("primaryAccountNumber", this.primaryAccountService.getAccount(id).get().getNumber());
         model.addAttribute("transactionsList", transactionsList);
-        return "transactions";
+        model.addAttribute("bodyContent", "transactions");
+        return "master-template";
     }
 }

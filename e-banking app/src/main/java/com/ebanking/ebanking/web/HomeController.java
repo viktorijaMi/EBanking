@@ -43,7 +43,8 @@ public class HomeController {
         List<PrimaryAccount> primaryAccountList = this.primaryAccountService.findAll();
         primaryAccountList.remove(userService.findByUsername(request.getRemoteUser()).get().getPrimaryAccount());
         model.addAttribute("primaryAccountList", primaryAccountList);
-        return "addmoney";
+        model.addAttribute("bodyContent", "addmoney");
+        return "master-template";
     }
 
     @PostMapping("/add")
