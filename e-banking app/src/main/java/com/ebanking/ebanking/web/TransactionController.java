@@ -24,7 +24,7 @@ public class TransactionController {
 
     @GetMapping("/{id}")
     public String getTransactionsPage(@PathVariable Long id,
-                                      Model model){
+                                      Model model) {
         List<PrimaryTransaction> transactionsList = this.primaryTransactionService.getTransactions(id);
         model.addAttribute("primaryAccountNumber", this.primaryAccountService.getAccount(id).get().getNumber());
         model.addAttribute("transactionsList", transactionsList);

@@ -43,10 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> register(String username, String password, String repeatedPassword, String firstName, String lastName, String email, Role role) {
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()){
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        if (!password.equals(repeatedPassword)){
+        if (!password.equals(repeatedPassword)) {
             throw new PasswordsDoNotMatchException();
         }
         Random random = new Random();

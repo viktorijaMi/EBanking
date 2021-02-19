@@ -5,9 +5,9 @@
             <label>Choose account to add money:
                 <select name="id" class="form-control" required>
                     <option
-                        th:each="pt : ${primaryAccountList}"
-                        th:text="${pt.getNumber()}"
-                        th:value="${pt.getId()}">
+                            th:each="pt : ${primaryAccountList}"
+                            th:text="${pt.getNumber()}"
+                            th:value="${pt.getId()}">
                     </option>
                 </select>
             </label>

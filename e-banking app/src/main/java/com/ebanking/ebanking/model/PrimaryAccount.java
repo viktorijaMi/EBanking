@@ -30,7 +30,7 @@ public class PrimaryAccount {
     @OneToMany(mappedBy = "fromAccount")
     private List<PrimaryTransaction> primaryTransactionList;
 
-    public PrimaryAccount(String username, int number, Double accountBalance){
+    public PrimaryAccount(String username, int number, Double accountBalance) {
         this.username = username;
         this.number = number;
         this.accountBalance = accountBalance;

@@ -14,16 +14,17 @@
                 <label>To Account:
                     <select class="form-control" name="toAccountId">
                         <option
-                            th:each="pt : ${primaryAccountList}"
-                            th:text="${pt.getNumber()}"
-                            th:value="${pt.getId()}">
+                                th:each="pt : ${primaryAccountList}"
+                                th:text="${pt.getNumber()}"
+                                th:value="${pt.getId()}">
                         </option>
                     </select>
                 </label>
             </div>
             <div class="form-group">
                 <label for="description">Description for transfer</label>
-                <input class="form-control" type="text" id="description" name="description" placeholder="Why do you transfer money to this account?">
+                <input class="form-control" type="text" id="description" name="description"
+                       placeholder="Why do you transfer money to this account?">
             </div>
             <div class="form-group">
                 <label for="transferAmount">Transfer amount</label>

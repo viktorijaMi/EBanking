@@ -32,7 +32,7 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
     @Override
     public PrimaryAccount createAccount(String username, int number, Double ballance) {
         PrimaryAccount primaryAccount = new PrimaryAccount(username, number, ballance);
-        if (this.primaryAccountRepository.findAll().contains(primaryAccount)){
+        if (this.primaryAccountRepository.findAll().contains(primaryAccount)) {
             return primaryAccount;
         }
         return this.primaryAccountRepository.save(primaryAccount);
@@ -66,12 +66,12 @@ public class PrimaryAccountServiceImpl implements PrimaryAccountService {
     }
 
     @Override
-    public PrimaryAccount transferMoney(Long fromAccountId, Long toAccountId,String description, Double transferAmount) {
+    public PrimaryAccount transferMoney(Long fromAccountId, Long toAccountId, String description, Double transferAmount) {
         PrimaryAccount fromAccount = this.primaryAccountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new PrimaryAccountNotFoundException(fromAccountId));
         PrimaryAccount toAccount = this.primaryAccountRepository.findById(toAccountId)
                 .orElseThrow(() -> new PrimaryAccountNotFoundException(toAccountId));
-        if (fromAccount.getAccountBalance() - transferAmount < 0){
+        if (fromAccount.getAccountBalance() - transferAmount < 0) {
             throw new NotSupportedTransferException(fromAccount.getNumber());
         }
 

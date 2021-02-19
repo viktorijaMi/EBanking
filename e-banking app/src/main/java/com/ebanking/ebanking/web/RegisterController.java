@@ -25,7 +25,7 @@ public class RegisterController {
     }
 
     @GetMapping
-    public String getRegisterPage(Model model){
+    public String getRegisterPage(Model model) {
         List<Role> roles = Arrays.asList(Role.values());
         model.addAttribute("roles", roles);
         model.addAttribute("bodyContent", "register");
@@ -39,7 +39,7 @@ public class RegisterController {
                            @RequestParam String firstName,
                            @RequestParam String lastName,
                            @RequestParam String email,
-                           @RequestParam Role role){
+                           @RequestParam Role role) {
         this.userService.register(username, password, repeatedPassword, firstName, lastName, email, role);
         return "redirect:/login";
     }

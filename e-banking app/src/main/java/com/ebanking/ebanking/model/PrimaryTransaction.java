@@ -31,7 +31,7 @@ public class PrimaryTransaction {
     @ManyToOne
     private PrimaryAccount fromAccount;
 
-    public PrimaryTransaction(String description, Double amount, PrimaryAccount fromAccount, PrimaryAccount toAccount){
+    public PrimaryTransaction(String description, Double amount, PrimaryAccount fromAccount, PrimaryAccount toAccount) {
         this.date = LocalDateTime.now();
         this.description = description;
         this.amount = amount;

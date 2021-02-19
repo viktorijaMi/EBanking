@@ -26,7 +26,7 @@ public class CustomUsernameAndPasswordProvider implements AuthenticationProvider
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        if("".equals(username) || "".equals(password)){
+        if ("".equals(username) || "".equals(password)) {
             throw new BadCredentialsException("Invalid Credentials");
         }
 

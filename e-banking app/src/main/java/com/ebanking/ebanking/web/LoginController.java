@@ -24,8 +24,8 @@ public class LoginController {
     }
 
     @GetMapping
-    public String getLoginPage(@RequestParam(required = false) String error, Model model){
-        if(error != null && !error.isEmpty()){
+    public String getLoginPage(@RequestParam(required = false) String error, Model model) {
+        if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
@@ -35,7 +35,7 @@ public class LoginController {
 
     @PostMapping
     public String login(@RequestParam String username,
-                        @RequestParam String password){
+                        @RequestParam String password) {
         User user = this.userService.login(username, password).get();
         return "redirect:/home";
     }

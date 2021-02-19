@@ -29,8 +29,8 @@ public class TransferController {
     public String getTransferPage(@RequestParam(required = false) String error,
                                   @PathVariable Long id,
                                   Model model,
-                                  HttpServletRequest request){
-        if (error != null && !error.isEmpty()){
+                                  HttpServletRequest request) {
+        if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
@@ -48,12 +48,12 @@ public class TransferController {
     public String transferMoney(@RequestParam Long toAccountId,
                                 @RequestParam String description,
                                 @RequestParam Double transferAmount,
-                                HttpServletRequest request){
+                                HttpServletRequest request) {
         PrimaryAccount fromAccount = (PrimaryAccount) request.getSession().getAttribute("account");
         try {
-            this.primaryAccountService.transferMoney(fromAccount.getId(), toAccountId,description, transferAmount);
-        } catch (NotSupportedTransferException ex){
-            return "redirect:/transfer/"+fromAccount.getId() +"?error=" + ex.getMessage();
+            this.primaryAccountService.transferMoney(fromAccount.getId(), toAccountId, description, transferAmount);
+        } catch (NotSupportedTransferException ex) {
+            return "redirect:/transfer/" + fromAccount.getId() + "?error=" + ex.getMessage();
         }
         User user = this.userService.findByUsername(fromAccount.getUsername()).get();
         request.getSession().setAttribute("user", user);

@@ -26,8 +26,8 @@ public class HomeController {
     @GetMapping
     public String getHomePage(@RequestParam(required = false) String message,
                               Model model,
-                              HttpServletRequest request){
-        if (message != null && !message.isEmpty()){
+                              HttpServletRequest request) {
+        if (message != null && !message.isEmpty()) {
             model.addAttribute("hasMessage", true);
             model.addAttribute("message", "TRANSFER SUCCESSFUL");
         }
@@ -39,7 +39,7 @@ public class HomeController {
 
     @GetMapping("/add")
     public String getAddMoneyPage(Model model,
-                                  HttpServletRequest request){
+                                  HttpServletRequest request) {
         List<PrimaryAccount> primaryAccountList = this.primaryAccountService.findAll();
         primaryAccountList.remove(userService.findByUsername(request.getRemoteUser()).get().getPrimaryAccount());
         model.addAttribute("primaryAccountList", primaryAccountList);
@@ -50,7 +50,7 @@ public class HomeController {
     @PostMapping("/add")
     public String addMoneyToAccount(@RequestParam Long id,
                                     @RequestParam Double ballance,
-                                    HttpServletRequest request){
+                                    HttpServletRequest request) {
         User user = this.primaryAccountService.addMoneyToAccount(id, ballance);
         request.getSession().setAttribute("user", user);
         return "redirect:/home";
