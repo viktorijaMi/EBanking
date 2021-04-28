@@ -1,0 +1,63 @@
+<div class="container" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="col-md-8 offset-2 mt-4">
+        <h3 class="text-center">Welcome to OBS
+            <span class="text-info" th:text="${user.getUsername()}"></span>.
+        </h3>
+        <h5 class="text-center">No, not the recording app...</h5>
+
+        <h2 class="text-center text-success">
+            <th:block th:if="${hasMessage}">
+                <span th:text="${message}"></span>
+            </th:block>
+        </h2>
+
+    </div>
+    <div class="col-md-8 offset-2 mt-4 mb-4">
+        <h5 class="text-center">Information about account <span class="text-info"
+                                                                th:text="${user.getPrimaryAccount().getNumber()}"></span>
+        </h5>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Account Number</th>
+                <th>
+                    <th:block sec:authorize="hasRole('ROLE_USER')">Account Balance</th:block>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <th:block th:text="${user.getFirstName()}"></th:block>
+                </td>
+                <td>
+                    <th:block th:text="${user.getLastName()}"></th:block>
+                </td>
+                <td>
+                    <th:block th:text="${user.getPrimaryAccount().getNumber()}"></th:block>
+                </td>
+                <td>
+                    <th:block th:text="${user.getPrimaryAccount().getAccountBalance()}"></th:block>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row col-md-8 offset-3">
+        <div class="col-md-3">
+            <a th:href="@{'/transfer/{id}' (id=${user.getPrimaryAccount().getId()})}" class="btn btn-info"
+               sec:authorize="hasRole('ROLE_USER')">Transfer money</a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{'/transactions/{id}' (id=${user.getPrimaryAccount().getId()})}" class="btn btn-info"
+               sec:authorize="hasRole('ROLE_USER')">Transactions</a>
+        </div>
+        <div class="col-md-3">
+            <a href="/home/add" class="btn btn-info" type="button"
+               sec:authorize="hasRole('ROLE_ADMIN')">Add amount</a>
+        </div>
+    </div>
+</div>
