@@ -3,6 +3,7 @@ package com.ebanking.ebanking.web;
 import com.ebanking.ebanking.model.User;
 import com.ebanking.ebanking.model.exceptions.UserNotFoundException;
 import com.ebanking.ebanking.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ public class LoginController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public String getLoginPage(@RequestParam(required = false) String error, Model model) {
         if (error != null && !error.isEmpty()) {
