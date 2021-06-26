@@ -6,6 +6,7 @@ import com.ebanking.ebanking.model.exceptions.NotSupportedTransferException;
 import com.ebanking.ebanking.service.PrimaryAccountService;
 import com.ebanking.ebanking.service.UserService;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ public class TransferController {
         return "master-template";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping
     public String transferMoney(@RequestParam Long toAccountId,
                                 @RequestParam String description,

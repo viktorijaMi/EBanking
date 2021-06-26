@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,8 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.csrf().disable()
 //                .authorizeRequests()
 //                .antMatchers("/register").permitAll()
-//                .anyRequest()
-//                .authenticated()
+//                .antMatchers("/transfer").authenticated().and().x509().subjectPrincipalRegex("CN=(.*?)(?:,|$)")
+//                .userDetailsService(userService)
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
 //                .formLogin()
 //                .loginPage("/login").permitAll()
@@ -53,11 +57,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated()
-                .and()
-                .x509()
-                .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
-                .userDetailsService(userService);
+//        http.authorizeRequests().anyRequest().authenticated()
+//                .and()
+//                .x509()
+//                .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
+//                .userDetailsService(userService)
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID");
+//        http.authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/transfer").hasRole("USER")
+//                .antMatchers("/home/add", "/add").hasRole("ADMIN")
+//                .and().x509().subjectPrincipalRegex("CN=(.*?),")
+//                .userDetailsService(userService)
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .invalidateHttpSession(true)
+//                .clearAuthentication(true);
+        http.x509().subjectPrincipalRegex("CN=(.*?)(?:,|$)").userDetailsService(userService)
+                .and().authorizeRequests().anyRequest().authenticated();
     }
 
     @Override

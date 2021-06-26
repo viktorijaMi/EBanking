@@ -1,11 +1,10 @@
 <div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
-            <img th:src="@{'/Users/retina/EBanking/e-banking-app/src/main/resources/assets/logo.png'}"
+            <img th:src="@{/Users/retina/EBanking/e-banking-app/src/main/resources/assets/logo.png}"
                  width="30"
                  height="30"
-                 class="d-inline-block align-top"
-                 src="../assets/logo.png">
+                 class="d-inline-block align-top">
             <span class="ml-2">OBS</span>
         </a>
 
@@ -35,10 +34,10 @@
                     <a href="/register" class="nav-link text-info"
                        sec:authorize="!isAuthenticated()">Register</a>
              </li>
-             <li>
-                 <a href="/logout" class="nav-link text-info"
-                    sec:authorize="isAuthenticated()">Logout</a>
-          </li>
+<!--             <li>-->
+<!--                 <a href="/logout" class="nav-link text-info"-->
+<!--                    sec:authorize="isAuthenticated()">Logout</a>-->
+<!--          </li>-->
       </ul>
   </div>
 </nav>

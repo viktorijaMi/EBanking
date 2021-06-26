@@ -24,7 +24,6 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping
     public String getLoginPage(@RequestParam(required = false) String error, Model model) {
         if (error != null && !error.isEmpty()) {
