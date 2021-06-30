@@ -45,7 +45,6 @@ public class TransferController {
         return "master-template";
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping
     public String transferMoney(@RequestParam Long toAccountId,
                                 @RequestParam String description,

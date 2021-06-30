@@ -22,97 +22,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
-    private final CustomUsernameAndPasswordProvider customUsernameAndPasswordProvider;
     private final UserService userService;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder, CustomUsernameAndPasswordProvider customUsernameAndPasswordProvider, UserService userService) {
-        this.passwordEncoder = passwordEncoder;
-        this.customUsernameAndPasswordProvider = customUsernameAndPasswordProvider;
+    public WebSecurityConfig(UserService userService) {
         this.userService = userService;
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/register").permitAll()
-//                .antMatchers("/transfer").authenticated().and().x509().subjectPrincipalRegex("CN=(.*?)(?:,|$)")
-//                .userDetailsService(userService)
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .failureUrl("/login?error=BadCredentials")
-//                .defaultSuccessUrl("/home", true)
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .clearAuthentication(true)
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID");
-//    }
-
-    @Override
+        @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().anyRequest().authenticated()
-//                .and()
-//                .x509()
-//                .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
-//                .userDetailsService(userService)
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID");
-//        http.authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/transfer").hasRole("USER")
-//                .antMatchers("/home/add", "/add").hasRole("ADMIN")
-//                .and().x509().subjectPrincipalRegex("CN=(.*?),")
-//                .userDetailsService(userService)
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout")
-//                .invalidateHttpSession(true)
-//                .clearAuthentication(true);
-        http.x509().subjectPrincipalRegex("CN=(.*?)(?:,|$)").userDetailsService(userService)
-                .and().authorizeRequests().anyRequest().authenticated();
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/transfer").authenticated()
+                .and().x509().subjectPrincipalRegex("CN=(.*?)(?:,|$)")
+                .userDetailsService(userService)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(customUsernameAndPasswordProvider);
-    }
-
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().anyRequest().authenticated()
-//                .and()
-//                .x509()
-//                .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
-//                .userDetailsService(userDetailsService());
-//    }
-//
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        return new UserDetailsService() {
-//            @Override
-//            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//                if (username.equals("viktorija")) {
-//                    return new User(username, "", AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
-//                }
-//                throw new UsernameNotFoundException(username);
-//            }
-//        };
-//    }
 }

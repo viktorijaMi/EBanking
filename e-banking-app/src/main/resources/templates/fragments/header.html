@@ -1,7 +1,7 @@
 <div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
-            <img th:src="@{/Users/retina/EBanking/e-banking-app/src/main/resources/assets/logo.png}"
+            <img src="https://image.flaticon.com/icons/png/512/2202/2202967.png"
                  width="30"
                  height="30"
                  class="d-inline-block align-top">
@@ -34,10 +34,10 @@
                     <a href="/register" class="nav-link text-info"
                        sec:authorize="!isAuthenticated()">Register</a>
              </li>
-<!--             <li>-->
-<!--                 <a href="/logout" class="nav-link text-info"-->
-<!--                    sec:authorize="isAuthenticated()">Logout</a>-->
-<!--          </li>-->
+             <li>
+                 <a href="https://localhost:8082/login" class="nav-link text-info"
+                    sec:authorize="isAuthenticated()">Go back to classic login</a>
+          </li>
       </ul>
   </div>
 </nav>
